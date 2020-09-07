@@ -30,7 +30,7 @@ class Custom_Dataset(Dataset):
         
         return self.data_len
 
-def load_Model(model_path = '../input/model-testt/aerialmodel.pth'):
+def load_Model(model_path = 'aerialmodel.pth'):
     model=torch.load(model_path,map_location=device)
     model.eval()
     return model
@@ -55,8 +55,6 @@ def make_Process_results(data_path):
         f.write(dumps(to_json))
 
 if __name__ == "__main__":
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    make_Process_results('../input/face-named/Test_face')
     if len (sys.argv) > 1:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         make_Process_results(sys.argv[1])
