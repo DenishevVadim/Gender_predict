@@ -12,6 +12,7 @@ from json import dumps
 import sys
 
 class Custom_Dataset(Dataset):
+
     def __init__(self, folder_path, transforms=None):
         self.folder_path = folder_path
         self.image_list = listdir(folder_path)
@@ -19,15 +20,13 @@ class Custom_Dataset(Dataset):
         self.transforms = transforms
 
     def __getitem__(self, index):
-        
         single_image_path = self.image_list[index]
         im_as_im = Image.open(self.folder_path+ '/' + single_image_path)
         if self.transforms is not None:
             im_as_ten = self.transforms(im_as_im)
         return (im_as_ten, single_image_path)
 
-    def __len__(self):
-        
+    def __len__(self):  
         return self.data_len
 
 def load_Model(model_path = 'aerialmodel.pth'):
@@ -48,7 +47,6 @@ def make_Process_results(data_path):
     to_json = {}
     model = load_Model()
     for i in dataset_Loader(data_path):
-        
         pred = model(i[0].to(device)).data.cpu().numpy()
         to_json[i[1][0]] = int(1-pred.argmax())*'fe' + 'male'
     with open('process_results.json', 'w') as f:
