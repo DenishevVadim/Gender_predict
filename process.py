@@ -13,6 +13,8 @@ from os.path import abspath
 from os import listdir
 from json import dumps
 import sys
+import warnings
+warnings.filterwarnings("ignore")
 
 class Custom_Dataset(Dataset):
 
