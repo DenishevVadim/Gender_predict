@@ -7,6 +7,9 @@ from torchvision import datasets, transforms
 from torchvision import transforms
 from PIL import Image
 
+from inspect import getsourcefile
+from os.path import abspath
+
 from os import listdir
 from json import dumps
 import sys
@@ -30,7 +33,7 @@ class Custom_Dataset(Dataset):
         return self.data_len
 
 def load_Model(model_path = 'aerialmodel.pth'):
-    model=torch.load(model_path,map_location=device)
+    model=torch.load(path_to_folder+model_path,map_location=device)
     model.eval()
     return model
 
@@ -54,6 +57,7 @@ def make_Process_results(data_path):
 
 if __name__ == "__main__":
     if len (sys.argv) > 1:
+        path_to_folder = abspath(getsourcefile(lambda:0)).split('process.py')[0]
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         make_Process_results(sys.argv[1])
         print ('Файл создан')
